@@ -4,10 +4,10 @@ namespace BasicPoker.Core.Hands;
 
 public class Hand
 {
-    public List<CardDetails> Cards { get; }
+    public List<Card> Cards { get; }
     public HandType HandType { get; }
 
-    public Hand(List<CardDetails> cards, HandType handType)
+    public Hand(List<Card> cards, HandType handType)
     {
         Cards = cards;
         HandType = handType;

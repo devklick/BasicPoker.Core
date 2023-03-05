@@ -12,8 +12,8 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_HighCard_InPlayerCards()
         {
             // arrange
-            var playerCards = new List<CardDetails> { CardDetails.KingOfClubs, CardDetails.AceOfClubs };
-            var tableCards = new List<CardDetails> { CardDetails.TenOfClubs, CardDetails.JackOfHearts, CardDetails.QueenOfClubs };
+            var playerCards = new List<Card> { Card.KingOfClubs, Card.AceOfClubs };
+            var tableCards = new List<Card> { Card.TenOfClubs, Card.JackOfHearts, Card.QueenOfClubs };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -21,15 +21,15 @@ namespace BasicPoker.Core.Test.Helpers
             highCardResult.Should().NotBeNull();
             var cardsInHand = highCardResult.Value.Hand.Cards;
             cardsInHand.Should().ContainSingle();
-            cardsInHand.First().Should().Be(CardDetails.AceOfClubs);
+            cardsInHand.First().Should().Be(Card.AceOfClubs);
         }
 
         [Fact]
         public void FiveCards_HighCard_InTableCards()
         {
             // arrange
-            var playerCards = new List<CardDetails> { CardDetails.KingOfClubs, CardDetails.JackOfHearts };
-            var tableCards = new List<CardDetails> { CardDetails.TenOfClubs, CardDetails.AceOfClubs, CardDetails.QueenOfClubs };
+            var playerCards = new List<Card> { Card.KingOfClubs, Card.JackOfHearts };
+            var tableCards = new List<Card> { Card.TenOfClubs, Card.AceOfClubs, Card.QueenOfClubs };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -37,18 +37,18 @@ namespace BasicPoker.Core.Test.Helpers
             highCardResult.Should().NotBeNull();
             var cardsInHand = highCardResult.Value.Hand.Cards;
             cardsInHand.Should().ContainSingle();
-            cardsInHand.First().Should().Be(CardDetails.AceOfClubs);
+            cardsInHand.First().Should().Be(Card.AceOfClubs);
         }
 
         [Fact]
         public void FiveCards_Pair_InTableCards()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
 
-            var playerCards = new List<CardDetails> { CardDetails.KingOfClubs, CardDetails.JackOfHearts };
-            var tableCards = new List<CardDetails> { expected1, expected2, CardDetails.ThreeOfClubs };
+            var playerCards = new List<Card> { Card.KingOfClubs, Card.JackOfHearts };
+            var tableCards = new List<Card> { expected1, expected2, Card.ThreeOfClubs };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -64,11 +64,11 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_Pair_InPlayerCards()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
 
-            var playerCards = new List<CardDetails> { expected1, expected2 };
-            var tableCards = new List<CardDetails> { CardDetails.KingOfClubs, CardDetails.JackOfHearts, CardDetails.ThreeOfClubs };
+            var playerCards = new List<Card> { expected1, expected2 };
+            var tableCards = new List<Card> { Card.KingOfClubs, Card.JackOfHearts, Card.ThreeOfClubs };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -84,11 +84,11 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_Pair_InPlayerAndTableCards()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
 
-            var playerCards = new List<CardDetails> { expected1, CardDetails.FourOfClubs };
-            var tableCards = new List<CardDetails> { CardDetails.KingOfClubs, expected2, CardDetails.ThreeOfClubs };
+            var playerCards = new List<Card> { expected1, Card.FourOfClubs };
+            var tableCards = new List<Card> { Card.KingOfClubs, expected2, Card.ThreeOfClubs };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -104,13 +104,13 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_TwoPair_PairInPlayerCards_PairOnTable()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.ThreeOfDiamonds;
-            var expected4 = CardDetails.ThreeOfSpades;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.ThreeOfDiamonds;
+            var expected4 = Card.ThreeOfSpades;
 
-            var playerCards = new List<CardDetails> { expected2, expected1 };
-            var tableCards = new List<CardDetails> { CardDetails.KingOfClubs, expected4, expected3 };
+            var playerCards = new List<Card> { expected2, expected1 };
+            var tableCards = new List<Card> { Card.KingOfClubs, expected4, expected3 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -129,13 +129,13 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_TwoPair_PairOnTable_PairSplitBetweenPlayerAndTable()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.ThreeOfDiamonds;
-            var expected4 = CardDetails.ThreeOfSpades;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.ThreeOfDiamonds;
+            var expected4 = Card.ThreeOfSpades;
 
-            var playerCards = new List<CardDetails> { expected2, CardDetails.EightOfClubs };
-            var tableCards = new List<CardDetails> { expected4, expected1, expected3 };
+            var playerCards = new List<Card> { expected2, Card.EightOfClubs };
+            var tableCards = new List<Card> { expected4, expected1, expected3 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -154,12 +154,12 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_ThreeOfAKind_TableCards()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.TwoOfHearts;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.TwoOfHearts;
 
-            var playerCards = new List<CardDetails> { CardDetails.SixOfDiamonds, CardDetails.FourOfClubs };
-            var tableCards = new List<CardDetails> { expected1, expected2, expected3 };
+            var playerCards = new List<Card> { Card.SixOfDiamonds, Card.FourOfClubs };
+            var tableCards = new List<Card> { expected1, expected2, expected3 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -176,12 +176,12 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_ThreeOfAKind_PlayerAndTableCards()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.TwoOfHearts;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.TwoOfHearts;
 
-            var playerCards = new List<CardDetails> { CardDetails.SixOfDiamonds, expected1, };
-            var tableCards = new List<CardDetails> { CardDetails.NineOfDiamonds, expected2, expected3 };
+            var playerCards = new List<Card> { Card.SixOfDiamonds, expected1, };
+            var tableCards = new List<Card> { Card.NineOfDiamonds, expected2, expected3 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -199,14 +199,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_FullHouse_PairInPlayerHand_ThreeOnTable()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.TwoOfHearts;
-            var expected4 = CardDetails.TenOfClubs;
-            var expected5 = CardDetails.TenOfHearts;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.TwoOfHearts;
+            var expected4 = Card.TenOfClubs;
+            var expected5 = Card.TenOfHearts;
 
-            var playerCards = new List<CardDetails> { expected4, expected5 };
-            var tableCards = new List<CardDetails> { expected3, expected1, expected2 };
+            var playerCards = new List<Card> { expected4, expected5 };
+            var tableCards = new List<Card> { expected3, expected1, expected2 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -225,14 +225,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_FullHouse_Split()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.TwoOfHearts;
-            var expected4 = CardDetails.TenOfClubs;
-            var expected5 = CardDetails.TenOfHearts;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.TwoOfHearts;
+            var expected4 = Card.TenOfClubs;
+            var expected5 = Card.TenOfHearts;
 
-            var playerCards = new List<CardDetails> { expected1, expected5 };
-            var tableCards = new List<CardDetails> { expected3, expected4, expected2 };
+            var playerCards = new List<Card> { expected1, expected5 };
+            var tableCards = new List<Card> { expected3, expected4, expected2 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -251,13 +251,13 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_FourOfAKind_ThreeOnTable()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.TwoOfHearts;
-            var expected4 = CardDetails.TwoOfSpades;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.TwoOfHearts;
+            var expected4 = Card.TwoOfSpades;
 
-            var playerCards = new List<CardDetails> { CardDetails.SixOfDiamonds, expected1, };
-            var tableCards = new List<CardDetails> { expected2, expected3, expected4 };
+            var playerCards = new List<Card> { Card.SixOfDiamonds, expected1, };
+            var tableCards = new List<Card> { expected2, expected3, expected4 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -275,13 +275,13 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_FourOfAKind_PairInPlayerHand()
         {
             // arrange
-            var expected1 = CardDetails.TwoOfClubs;
-            var expected2 = CardDetails.TwoOfDiamonds;
-            var expected3 = CardDetails.TwoOfHearts;
-            var expected4 = CardDetails.TwoOfSpades;
+            var expected1 = Card.TwoOfClubs;
+            var expected2 = Card.TwoOfDiamonds;
+            var expected3 = Card.TwoOfHearts;
+            var expected4 = Card.TwoOfSpades;
 
-            var playerCards = new List<CardDetails> { expected2, expected1, };
-            var tableCards = new List<CardDetails> { CardDetails.EightOfClubs, expected3, expected4 };
+            var playerCards = new List<Card> { expected2, expected1, };
+            var tableCards = new List<Card> { Card.EightOfClubs, expected3, expected4 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -299,14 +299,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_Flush()
         {
             // arrange
-            var expected1 = CardDetails.AceOfHearts;
-            var expected2 = CardDetails.SixOfHearts;
-            var expected3 = CardDetails.TenOfHearts;
-            var expected4 = CardDetails.FourOfHearts;
-            var expected5 = CardDetails.EightOfHearts;
+            var expected1 = Card.AceOfHearts;
+            var expected2 = Card.SixOfHearts;
+            var expected3 = Card.TenOfHearts;
+            var expected4 = Card.FourOfHearts;
+            var expected5 = Card.EightOfHearts;
 
-            var playerCards = new List<CardDetails> { expected1, expected2 };
-            var tableCards = new List<CardDetails> { expected3, expected4, expected5 };
+            var playerCards = new List<Card> { expected1, expected2 };
+            var tableCards = new List<Card> { expected3, expected4, expected5 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -325,14 +325,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_Straight_AceLow()
         {
             // arrange
-            var expected1 = CardDetails.AceOfHearts;
-            var expected2 = CardDetails.TwoOfClubs;
-            var expected3 = CardDetails.ThreeOfHearts;
-            var expected4 = CardDetails.FourOfHearts;
-            var expected5 = CardDetails.FiveOfSpades;
+            var expected1 = Card.AceOfHearts;
+            var expected2 = Card.TwoOfClubs;
+            var expected3 = Card.ThreeOfHearts;
+            var expected4 = Card.FourOfHearts;
+            var expected5 = Card.FiveOfSpades;
 
-            var playerCards = new List<CardDetails> { expected2, expected4 };
-            var tableCards = new List<CardDetails> { expected1, expected3, expected5 };
+            var playerCards = new List<Card> { expected2, expected4 };
+            var tableCards = new List<Card> { expected1, expected3, expected5 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -351,14 +351,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_Straight_AceHigh()
         {
             // arrange
-            var expected1 = CardDetails.AceOfHearts;
-            var expected2 = CardDetails.KingOfDiamonds;
-            var expected3 = CardDetails.QueenOfHearts;
-            var expected4 = CardDetails.JackOfClubs;
-            var expected5 = CardDetails.TenOfSpades;
+            var expected1 = Card.AceOfHearts;
+            var expected2 = Card.KingOfDiamonds;
+            var expected3 = Card.QueenOfHearts;
+            var expected4 = Card.JackOfClubs;
+            var expected5 = Card.TenOfSpades;
 
-            var playerCards = new List<CardDetails> { expected2, expected4 };
-            var tableCards = new List<CardDetails> { expected1, expected3, expected5 };
+            var playerCards = new List<Card> { expected2, expected4 };
+            var tableCards = new List<Card> { expected1, expected3, expected5 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -377,14 +377,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_Straight()
         {
             // arrange
-            var expected1 = CardDetails.FourOfClubs;
-            var expected2 = CardDetails.FiveOfDiamonds;
-            var expected3 = CardDetails.SixOfDiamonds;
-            var expected4 = CardDetails.SevenOfSpades;
-            var expected5 = CardDetails.EightOfHearts;
+            var expected1 = Card.FourOfClubs;
+            var expected2 = Card.FiveOfDiamonds;
+            var expected3 = Card.SixOfDiamonds;
+            var expected4 = Card.SevenOfSpades;
+            var expected5 = Card.EightOfHearts;
 
-            var playerCards = new List<CardDetails> { expected2, expected4 };
-            var tableCards = new List<CardDetails> { expected1, expected3, expected5 };
+            var playerCards = new List<Card> { expected2, expected4 };
+            var tableCards = new List<Card> { expected1, expected3, expected5 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -403,14 +403,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_StraightFlush()
         {
             // arrange
-            var expected1 = CardDetails.FourOfClubs;
-            var expected2 = CardDetails.FiveOfClubs;
-            var expected3 = CardDetails.SixOfClubs;
-            var expected4 = CardDetails.SevenOfClubs;
-            var expected5 = CardDetails.EightOfClubs;
+            var expected1 = Card.FourOfClubs;
+            var expected2 = Card.FiveOfClubs;
+            var expected3 = Card.SixOfClubs;
+            var expected4 = Card.SevenOfClubs;
+            var expected5 = Card.EightOfClubs;
 
-            var playerCards = new List<CardDetails> { expected2, expected4 };
-            var tableCards = new List<CardDetails> { expected1, expected3, expected5 };
+            var playerCards = new List<Card> { expected2, expected4 };
+            var tableCards = new List<Card> { expected1, expected3, expected5 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -429,14 +429,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_StraightFlush_OneBelowRoyal()
         {
             // arrange
-            var expected1 = CardDetails.NineOfDiamonds;
-            var expected2 = CardDetails.TenOfDiamonds;
-            var expected3 = CardDetails.JackOfDiamonds;
-            var expected4 = CardDetails.QueenOfDiamonds;
-            var expected5 = CardDetails.KingOfDiamonds;
+            var expected1 = Card.NineOfDiamonds;
+            var expected2 = Card.TenOfDiamonds;
+            var expected3 = Card.JackOfDiamonds;
+            var expected4 = Card.QueenOfDiamonds;
+            var expected5 = Card.KingOfDiamonds;
 
-            var playerCards = new List<CardDetails> { expected2, expected4 };
-            var tableCards = new List<CardDetails> { expected1, expected3, expected5 };
+            var playerCards = new List<Card> { expected2, expected4 };
+            var tableCards = new List<Card> { expected1, expected3, expected5 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert
@@ -455,14 +455,14 @@ namespace BasicPoker.Core.Test.Helpers
         public void FiveCards_RoyalFlush()
         {
             // arrange
-            var expected1 = CardDetails.TenOfSpades;
-            var expected2 = CardDetails.JackOfSpades;
-            var expected3 = CardDetails.QueenOfSpades;
-            var expected4 = CardDetails.KingOfSpades;
-            var expected5 = CardDetails.AceOfSpades;
+            var expected1 = Card.TenOfSpades;
+            var expected2 = Card.JackOfSpades;
+            var expected3 = Card.QueenOfSpades;
+            var expected4 = Card.KingOfSpades;
+            var expected5 = Card.AceOfSpades;
 
-            var playerCards = new List<CardDetails> { expected2, expected4 };
-            var tableCards = new List<CardDetails> { expected1, expected3, expected5 };
+            var playerCards = new List<Card> { expected2, expected4 };
+            var tableCards = new List<Card> { expected1, expected3, expected5 };
             // act
             var result = HandHelper.DetermineHandProbabilities(playerCards, tableCards);
             // assert

@@ -5,9 +5,9 @@ namespace BasicPoker.Core.Cards;
 
 public class Deck
 {
-    private readonly Queue<CardDetails> _cards;
+    private readonly Queue<Card> _cards;
 
-    public Deck(Queue<CardDetails> cards)
+    public Deck(Queue<Card> cards)
     {
         _cards = cards;
     }
@@ -20,7 +20,7 @@ public class Deck
         {
             foreach (var suit in CardHelper.AllSuits)
             {
-                _cards.Enqueue(new CardDetails(suit, rank));
+                _cards.Enqueue(new Card(suit, rank));
             }
         }
 
@@ -29,9 +29,9 @@ public class Deck
 
     public void Shuffle() => _cards.Shuffle();
 
-    public CardDetails Take() => _cards.Dequeue();
+    public Card TakeCard() => _cards.Dequeue();
 
-    public void Add(params CardDetails[] cards)
+    public void Add(params Card[] cards)
     {
         foreach (var card in cards) _cards.Enqueue(card);
     }

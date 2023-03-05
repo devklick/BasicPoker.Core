@@ -16,13 +16,13 @@ public class HandHelper
         HandTypes = HandMetadata.Keys.ToList().OrderByDescending(x => x).ToList();
     }
 
-    public static Dictionary<HandType, HandProbability> DetermineHandProbabilities(List<CardDetails> playerCards, List<CardDetails> tableCards)
+    public static Dictionary<HandType, HandProbability> DetermineHandProbabilities(List<Card> playerCards, List<Card> tableCards)
     {
         var results = new Dictionary<HandType, HandProbability>();
 
         foreach (var handType in HandTypes)
         {
-            var allCards = new List<CardDetails>(playerCards).Concat(tableCards).ToList();
+            var allCards = new List<Card>(playerCards).Concat(tableCards).ToList();
             var metadata = HandMetadata[handType];
 
             results.Add(handType, DetermineHandProbability(allCards, handType, metadata));
@@ -31,9 +31,9 @@ public class HandHelper
         return results;
     }
 
-    private static HandProbability DetermineHandProbability(List<CardDetails> allCards, HandType handType, HandTypeMetadataAttribute metadata)
+    private static HandProbability DetermineHandProbability(List<Card> allCards, HandType handType, HandTypeMetadataAttribute metadata)
     {
-        var cardsInHand = new List<CardDetails>(allCards);
+        var cardsInHand = new List<Card>(allCards);
         var result = (double probability) => new HandProbability(new Hand(cardsInHand, handType), probability);
 
         // TODO: Determination of hand probability
@@ -53,15 +53,15 @@ public class HandHelper
     }
 
     private static bool MeetsCriteria<T>(
-        Func<List<CardDetails>, T, (bool Success, List<CardDetails> Cards)> checker,
+        Func<List<Card>, T, (bool Success, List<Card> Cards)> checker,
         T checkerParam,
-        ref List<CardDetails> candidates)
+        ref List<Card> candidates)
     {
         var (success, cardsInHand) = checker.Invoke(candidates, checkerParam);
 
         if (success)
         {
-            var copy = new List<CardDetails>(cardsInHand);
+            var copy = new List<Card>(cardsInHand);
             candidates.Clear();
             foreach (var card in copy) candidates.Add(card);
         }
@@ -69,12 +69,12 @@ public class HandHelper
         return success;
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsSameRankCriteria(List<CardDetails> cards, int[] sameRankCounts)
+    private static (bool Success, List<Card> Cards) MeetsSameRankCriteria(List<Card> cards, int[] sameRankCounts)
     {
         // If we don't card about having a certain number of cards with the same rank, 
         // this check passes and all candidate cards are still candidates
         if (sameRankCounts.All(c => c == 0)) return (true, cards);
-        if (cards.Count < sameRankCounts.Aggregate((sum, val) => sum + val)) return (false, new List<CardDetails>());
+        if (cards.Count < sameRankCounts.Aggregate((sum, val) => sum + val)) return (false, new List<Card>());
 
         var groups = cards
             .GroupBy(c => c.Rank)
@@ -82,7 +82,7 @@ public class HandHelper
             .OrderByDescending(c => (int)c.Rank);
 
         var ranksUsed = new List<CardRank>();
-        var cardsUsed = new List<CardDetails>();
+        var cardsUsed = new List<Card>();
 
         foreach (var rankCount in sameRankCounts)
         {
@@ -100,7 +100,7 @@ public class HandHelper
         return (true, cardsUsed);
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsSameSuitCriteria(List<CardDetails> cards, int sameSuitCount)
+    private static (bool Success, List<Card> Cards) MeetsSameSuitCriteria(List<Card> cards, int sameSuitCount)
     {
         // If we don't care about having a certain number of cards with the same suit, 
         // this check passes and all candidate cards are still candidates
@@ -111,7 +111,7 @@ public class HandHelper
             .Select(r => new { Suit = r.Key, Cards = r.ToList(), r.ToList().Count });
 
         var suitsUsed = new List<CardSuit>();
-        var cardsUsed = new List<CardDetails>();
+        var cardsUsed = new List<Card>();
 
         var match = groups.FirstOrDefault(g => !suitsUsed.Contains(g.Suit) && g.Count == sameSuitCount);
 
@@ -126,7 +126,7 @@ public class HandHelper
         return (true, cardsUsed);
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsSequentialRankCriteria(List<CardDetails> cards, bool sequentialRank)
+    private static (bool Success, List<Card> Cards) MeetsSequentialRankCriteria(List<Card> cards, bool sequentialRank)
     {
         // If we don't care about sequential ranks, this check passes and all cards are still candidates
         if (!sequentialRank) return (true, cards);
@@ -141,15 +141,15 @@ public class HandHelper
             if (result) return (true, cards);
         }
 
-        return (false, new List<CardDetails>());
+        return (false, new List<Card>());
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsHighestCardCriteria(List<CardDetails> cards, CardRank? highestCard)
+    private static (bool Success, List<Card> Cards) MeetsHighestCardCriteria(List<Card> cards, CardRank? highestCard)
     {
         if (!highestCard.HasValue) return (true, cards);
 
         var success = cards.OrderByDescending(c => (int)c.Rank).First().Rank == highestCard;
 
-        return (success, success ? cards : new List<CardDetails>());
+        return (success, success ? cards : new List<Card>());
     }
 }

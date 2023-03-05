@@ -12,30 +12,30 @@ namespace BasicPoker.Core.Test.Helpers
         public void TwoCards_HighCard_KingAce()
         {
             // arrange
-            var cards = new List<CardDetails> { CardDetails.KingOfClubs, CardDetails.AceOfClubs };
+            var cards = new List<Card> { Card.KingOfClubs, Card.AceOfClubs };
             // act
-            var result = HandHelper.DetermineHandProbabilities(cards, new List<CardDetails>());
+            var result = HandHelper.DetermineHandProbabilities(cards, new List<Card>());
             // assert
             var highCardResult = result.FirstOrDefault(r => r.Key == HandType.HighCard);
             highCardResult.Should().NotBeNull();
             var cardsInHand = highCardResult.Value.Hand.Cards;
             cardsInHand.Should().ContainSingle();
-            cardsInHand.First().Should().Be(CardDetails.AceOfClubs);
+            cardsInHand.First().Should().Be(Card.AceOfClubs);
         }
 
         [Fact]
         public void TwoCards_HighCard_TwoAce()
         {
             // arrange
-            var cards = new List<CardDetails> { CardDetails.TwoOfClubs, CardDetails.AceOfSpades };
+            var cards = new List<Card> { Card.TwoOfClubs, Card.AceOfSpades };
             // act
-            var result = HandHelper.DetermineHandProbabilities(cards, new List<CardDetails>());
+            var result = HandHelper.DetermineHandProbabilities(cards, new List<Card>());
             // assert
             var highCardResult = result.FirstOrDefault(r => r.Key == HandType.HighCard);
             highCardResult.Should().NotBeNull();
             var cardsInHand = highCardResult.Value.Hand.Cards;
             cardsInHand.Should().ContainSingle();
-            cardsInHand.First().Should().Be(CardDetails.AceOfSpades);
+            cardsInHand.First().Should().Be(Card.AceOfSpades);
         }
 
 
@@ -43,9 +43,9 @@ namespace BasicPoker.Core.Test.Helpers
         public void TwoCards_Pair_AceAce()
         {
             // arrange
-            var cards = new List<CardDetails> { CardDetails.AceOfClubs, CardDetails.AceOfDiamonds };
+            var cards = new List<Card> { Card.AceOfClubs, Card.AceOfDiamonds };
             // act
-            var result = HandHelper.DetermineHandProbabilities(cards, new List<CardDetails>());
+            var result = HandHelper.DetermineHandProbabilities(cards, new List<Card>());
             // assert
             var pairResult = result.FirstOrDefault(r => r.Key == HandType.Pair);
             pairResult.Should().NotBeNull();
@@ -59,9 +59,9 @@ namespace BasicPoker.Core.Test.Helpers
         public void TwoCards_Pair_KingKing()
         {
             // arrange
-            var cards = new List<CardDetails> { CardDetails.KingOfClubs, CardDetails.KingOfHearts };
+            var cards = new List<Card> { Card.KingOfClubs, Card.KingOfHearts };
             // act
-            var result = HandHelper.DetermineHandProbabilities(cards, new List<CardDetails>());
+            var result = HandHelper.DetermineHandProbabilities(cards, new List<Card>());
             // assert
             var pairResult = result.FirstOrDefault(r => r.Key == HandType.Pair);
             pairResult.Should().NotBeNull();
