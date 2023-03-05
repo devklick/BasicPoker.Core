@@ -5,12 +5,10 @@ namespace BasicPoker.Core.Players;
 public class Player
 {
     public CardCollection Cards { get; }
-    public int SeatNumber { get; }
     public PlayerButtonType Button { get; private set; }
 
-    public Player(int seatNumber)
+    public Player()
     {
-        SeatNumber = seatNumber;
         Cards = new CardCollection(2);
     }
 

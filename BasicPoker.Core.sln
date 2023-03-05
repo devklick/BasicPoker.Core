@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{72241E43-F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicPoker.Core.Test", "test\BasicPoker.Core.Test\BasicPoker.Core.Test.csproj", "{C8D9B091-DC97-4C6E-834A-244696E5F65D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicPoker.Core.ConsoleClient", "src\BasicPoker.Core.ConsoleClient\BasicPoker.Core.ConsoleClient.csproj", "{7E7E7351-4B15-49B0-9DE8-81D637FBEA76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{C8D9B091-DC97-4C6E-834A-244696E5F65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D9B091-DC97-4C6E-834A-244696E5F65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8D9B091-DC97-4C6E-834A-244696E5F65D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7E7351-4B15-49B0-9DE8-81D637FBEA76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7E7351-4B15-49B0-9DE8-81D637FBEA76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7E7351-4B15-49B0-9DE8-81D637FBEA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7E7351-4B15-49B0-9DE8-81D637FBEA76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5976CEF8-9E92-4C8E-B3A9-D476DD60713B} = {CF9BAD42-0766-4779-B510-FF7F8750E50D}
 		{C8D9B091-DC97-4C6E-834A-244696E5F65D} = {72241E43-F065-46EC-9DD8-1BE7EAABA206}
+		{7E7E7351-4B15-49B0-9DE8-81D637FBEA76} = {CF9BAD42-0766-4779-B510-FF7F8750E50D}
 	EndGlobalSection
 EndGlobal
