@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CF9BAD42-0766-4779-B510-FF7F8750E50D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicPoker.Core", "src\BasicPoker.Core\BasicPoker.Core.csproj", "{5976CEF8-9E92-4C8E-B3A9-D476DD60713B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{72241E43-F065-46EC-9DD8-1BE7EAABA206}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicPoker.Core.Test", "test\BasicPoker.Core.Test\BasicPoker.Core.Test.csproj", "{C8D9B091-DC97-4C6E-834A-244696E5F65D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5976CEF8-9E92-4C8E-B3A9-D476DD60713B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5976CEF8-9E92-4C8E-B3A9-D476DD60713B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5976CEF8-9E92-4C8E-B3A9-D476DD60713B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5976CEF8-9E92-4C8E-B3A9-D476DD60713B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8D9B091-DC97-4C6E-834A-244696E5F65D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8D9B091-DC97-4C6E-834A-244696E5F65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8D9B091-DC97-4C6E-834A-244696E5F65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8D9B091-DC97-4C6E-834A-244696E5F65D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5976CEF8-9E92-4C8E-B3A9-D476DD60713B} = {CF9BAD42-0766-4779-B510-FF7F8750E50D}
+		{C8D9B091-DC97-4C6E-834A-244696E5F65D} = {72241E43-F065-46EC-9DD8-1BE7EAABA206}
+	EndGlobalSection
+EndGlobal
