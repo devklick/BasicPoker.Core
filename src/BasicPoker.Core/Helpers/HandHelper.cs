@@ -1,5 +1,3 @@
-
-
 using BasicPoker.Core.Cards;
 using BasicPoker.Core.Extensions;
 using BasicPoker.Core.Hands;
@@ -35,23 +33,20 @@ public class HandHelper
 
     private static HandProbability DetermineHandProbability(List<CardDetails> allCards, HandType handType, HandTypeMetadataAttribute metadata)
     {
-        if (handType == HandType.HighCard)
-        {
-
-        }
         var cardsInHand = new List<CardDetails>(allCards);
         var result = (double probability) => new HandProbability(new Hand(cardsInHand, handType), probability);
 
-        if (!MeetsCriteria(MeetsSameRankCriteria, metadata.SameRankCounts, cardsInHand))
+        // TODO: Determination of hand probability
+        if (!MeetsCriteria(MeetsSameRankCriteria, metadata.SameRankCounts, ref cardsInHand))
             return result(0);
 
-        if (!MeetsCriteria(MeetsSameSuitCriteria, metadata.SameSuitCount, cardsInHand))
+        if (!MeetsCriteria(MeetsSameSuitCriteria, metadata.SameSuitCount, ref cardsInHand))
             return result(0);
 
-        if (!MeetsCriteria(MeetsSequentialRankCriteria, metadata.SequentialRank, cardsInHand))
+        if (!MeetsCriteria(MeetsSequentialRankCriteria, metadata.SequentialRank, ref cardsInHand))
             return result(0);
 
-        if (!MeetsCriteria(MeetsHighestCardCriteria, metadata.HighestCard, cardsInHand))
+        if (!MeetsCriteria(MeetsHighestCardCriteria, metadata.HighestCard, ref cardsInHand))
             return result(0);
 
         return result(100);
@@ -60,20 +55,22 @@ public class HandHelper
     private static bool MeetsCriteria<T>(
         Func<List<CardDetails>, T, (bool Success, List<CardDetails> Cards)> checker,
         T checkerParam,
-        List<CardDetails> candidates)
+        ref List<CardDetails> candidates)
     {
         var (success, cardsInHand) = checker.Invoke(candidates, checkerParam);
+
         if (success)
         {
+            var copy = new List<CardDetails>(cardsInHand);
             candidates.Clear();
-            cardsInHand.ForEach(c => candidates.Add(c));
+            foreach (var card in copy) candidates.Add(card);
         }
+
         return success;
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsSameRankCriteria(List<CardDetails> candidates, int[] sameRankCounts)
+    private static (bool Success, List<CardDetails> Cards) MeetsSameRankCriteria(List<CardDetails> cards, int[] sameRankCounts)
     {
-        var cards = new List<CardDetails>(candidates);
         // If we don't card about having a certain number of cards with the same rank, 
         // this check passes and all candidate cards are still candidates
         if (sameRankCounts.All(c => c == 0)) return (true, cards);
@@ -103,9 +100,8 @@ public class HandHelper
         return (true, cardsUsed);
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsSameSuitCriteria(List<CardDetails> candidates, int sameSuitCount)
+    private static (bool Success, List<CardDetails> Cards) MeetsSameSuitCriteria(List<CardDetails> cards, int sameSuitCount)
     {
-        var cards = new List<CardDetails>(candidates);
         // If we don't care about having a certain number of cards with the same suit, 
         // this check passes and all candidate cards are still candidates
         if (sameSuitCount == 0) return (true, cards);
@@ -130,9 +126,8 @@ public class HandHelper
         return (true, cardsUsed);
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsSequentialRankCriteria(List<CardDetails> candidates, bool sequentialRank)
+    private static (bool Success, List<CardDetails> Cards) MeetsSequentialRankCriteria(List<CardDetails> cards, bool sequentialRank)
     {
-        var cards = new List<CardDetails>(candidates);
         // If we don't care about sequential ranks, this check passes and all cards are still candidates
         if (!sequentialRank) return (true, cards);
 
@@ -149,10 +144,9 @@ public class HandHelper
         return (false, new List<CardDetails>());
     }
 
-    private static (bool Success, List<CardDetails> Cards) MeetsHighestCardCriteria(List<CardDetails> candidates, CardRank? highestCard)
+    private static (bool Success, List<CardDetails> Cards) MeetsHighestCardCriteria(List<CardDetails> cards, CardRank? highestCard)
     {
-        var cards = new List<CardDetails>(candidates);
-        if (!highestCard.HasValue) return (true, cards.ToList());
+        if (!highestCard.HasValue) return (true, cards);
 
         var success = cards.OrderByDescending(c => (int)c.Rank).First().Rank == highestCard;
 
