@@ -17,8 +17,5 @@ class Program
         table.SeatPlayer(player3);
 
         table.DealNewGame();
-
-
-
     }
 }

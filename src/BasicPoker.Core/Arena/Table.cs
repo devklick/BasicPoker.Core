@@ -13,7 +13,7 @@ public class Table
     {
         get
         {
-            var game = _games.Last();
+            var game = _games.LastOrDefault();
             return game != null && game.CurrentState == GameState.InPlay ? game : null;
         }
     }
@@ -48,22 +48,37 @@ public class Table
     public void DealNewGame()
     {
         if (ActiveGame != null)
-        {
             throw new InvalidOperationException("Cannot deal new game while another game is active");
-        }
+
         if (RequiresMorePlayers)
         {
             throw new InvalidOperationException(
                 $"Currently {Players.Count} players at the table. Require minimum of {_minPlayers} to deal a game.");
         }
 
-        if (_games.Any())
-        {
-            RotateButtons();
-        }
+        DistributeButtons();
 
         var players = PlayersLeftOfDealer();
         _games.Add(new Game(players, _dealer));
+    }
+
+    private void DistributeButtons()
+    {
+        if (_games.Any()) RotateButtons();
+        else PlaceInitialButtons();
+    }
+
+    private void PlaceInitialButtons()
+    {
+        GivePlayerButton(Players.FirstOrDefault(), PlayerButtonType.Dealer);
+        GivePlayerButton(Players.ElementAtOrDefault(1), PlayerButtonType.SmallBlind);
+        GivePlayerButton(Players.ElementAtOrDefault(2), PlayerButtonType.BigBlind);
+    }
+
+    private static void GivePlayerButton(Player? player, PlayerButtonType button)
+    {
+        if (player == null) throw new InvalidOperationException("Unable to find players to distribute buttons to");
+        player.GiveButton(button);
     }
 
     private void RotateButtons()
