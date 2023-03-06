@@ -6,10 +6,12 @@ public class Player
 {
     public CardCollection Cards { get; }
     public PlayerButtonType Button { get; private set; }
+    public double Stack { get; private set; }
 
-    public Player()
+    public Player(double stack)
     {
         Cards = new CardCollection(2);
+        Stack = stack;
     }
 
     public void DealCard(Card card)

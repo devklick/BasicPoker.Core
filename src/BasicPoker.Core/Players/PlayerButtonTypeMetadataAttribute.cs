@@ -4,10 +4,10 @@ namespace BasicPoker.Core.Players;
 public class PlayerButtonTypeMetadataAttribute : Attribute
 {
     public string Sprite { get; }
-    public double SmallBlindMultiplier { get; }
-    public PlayerButtonTypeMetadataAttribute(string sprite, double smallBlindMultiplier)
+    public double MinBetMultiplier { get; }
+    public PlayerButtonTypeMetadataAttribute(string sprite, double minBetMultiplier)
     {
         Sprite = sprite;
-        SmallBlindMultiplier = smallBlindMultiplier;
+        MinBetMultiplier = minBetMultiplier;
     }
 }

@@ -5,10 +5,10 @@ public enum PlayerButtonType
     [PlayerButtonTypeMetadata("", 0)]
     None,
 
-    [PlayerButtonTypeMetadata("SB", 1)]
+    [PlayerButtonTypeMetadata("SB", 0.5)]
     SmallBlind,
 
-    [PlayerButtonTypeMetadata("BB", 2)]
+    [PlayerButtonTypeMetadata("BB", 1)]
     BigBlind,
 
     [PlayerButtonTypeMetadata("D", 0)]
