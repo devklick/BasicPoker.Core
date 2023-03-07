@@ -27,8 +27,8 @@ public class Game
         _players = new List<(Player Player, bool Out)>(players.Select(p => (p, false)));
         _dealer = dealer;
         _dealer.DealTo(players);
-        Rounds.Add(BettingRoundType.PreFlop, new BettingRound(BettingRoundType.PreFlop));
         _communityCards = communityCards;
+        Rounds.Add(BettingRoundType.PreFlop, new BettingRound(BettingRoundType.PreFlop));
     }
 
     public void NextRound()

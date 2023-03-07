@@ -31,8 +31,8 @@ public class CardHelper
             Rank = rank,
             Suit = suit,
             Color = suitData.Color,
-            SuitSprite = suitData.Sprite2D,
-            RankSprite = rankData.Sprite2D,
+            SuitSprite = suitData.Sprite,
+            RankSprite = rankData.Sprite,
             Values = rankData.Values
         };
     }
