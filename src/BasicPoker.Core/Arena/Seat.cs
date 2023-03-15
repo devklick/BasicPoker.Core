@@ -7,12 +7,15 @@ public class Seat
     public int SeatNumber { get; }
     public Player? Player { get; private set; }
     public bool IsAvailable => Player == null;
+    public bool IsTaken => !IsAvailable;
 
     public Seat(int seatNumber, Player? player = null)
     {
         SeatNumber = seatNumber;
         Player = player;
     }
+
+    public void SeatPlayer(Player player) => Player = player;
 
     internal static List<Seat> CreateSequence(int count)
     {
@@ -23,6 +26,4 @@ public class Seat
         }
         return seats;
     }
-
-    public void SeatPlayer(Player player) => Player = player;
 }

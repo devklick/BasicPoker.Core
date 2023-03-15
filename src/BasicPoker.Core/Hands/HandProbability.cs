@@ -2,8 +2,8 @@ namespace BasicPoker.Core.Hands;
 
 public class HandProbability
 {
-    public Hand Hand { get; set; }
-    public double Probability { get; set; }
+    public Hand Hand { get; }
+    public double Probability { get; }
     public HandProbability(Hand hand, double probability)
     {
         Hand = hand;

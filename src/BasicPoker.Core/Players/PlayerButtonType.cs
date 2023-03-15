@@ -2,7 +2,7 @@ namespace BasicPoker.Core.Players;
 
 public enum PlayerButtonType
 {
-    [PlayerButtonTypeMetadata("", 0)]
+    [PlayerButtonTypeMetadata("")]
     None,
 
     [PlayerButtonTypeMetadata("SB", 0.5)]
@@ -11,6 +11,6 @@ public enum PlayerButtonType
     [PlayerButtonTypeMetadata("BB", 1)]
     BigBlind,
 
-    [PlayerButtonTypeMetadata("D", 0)]
+    [PlayerButtonTypeMetadata("D")]
     Dealer
 }

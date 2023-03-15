@@ -2,7 +2,7 @@ namespace BasicPoker.Core.Games;
 
 public enum GameState
 {
-    Initializing,
+    Setup,
     InPlay,
     Over
 }

@@ -5,7 +5,9 @@ namespace BasicPoker.Core.Cards;
 
 public class Deck
 {
-    private readonly Queue<Card> _cards;
+    public int Size { get; }
+    private Queue<Card> _cards;
+    public bool IsEmpty => !_cards.Any();
 
     public Deck(Queue<Card> cards)
     {
@@ -14,25 +16,38 @@ public class Deck
 
     public Deck()
     {
-        _cards = new();
-
+        var cards = new List<Card>();
         foreach (var rank in CardHelper.AllRanks)
         {
             foreach (var suit in CardHelper.AllSuits)
             {
-                _cards.Enqueue(new Card(suit, rank));
+                cards.Add(new Card(suit, rank));
             }
         }
 
-        _cards.Shuffle();
+        cards.Shuffle().Shuffle();
+
+        _cards = new Queue<Card>(cards);
+        Size = cards.Count;
     }
 
-    public void Shuffle() => _cards.Shuffle();
+    public void Shuffle()
+    {
+        // TODO: May be better to get rid of queue and just store a readonly list
+        var cards = new List<Card>(_cards);
+        cards.Shuffle();
+        _cards = new Queue<Card>(cards);
+    }
 
-    public Card TakeCard() => _cards.Dequeue();
+    public Card TakeNextCard() => _cards.Dequeue();
 
-    public void Add(params Card[] cards)
+    public void AddToDeck(params Card[] cards)
     {
         foreach (var card in cards) _cards.Enqueue(card);
+    }
+
+    public void ThrowIfEmpty()
+    {
+        if (!_cards.Any()) throw new ArgumentOutOfRangeException("No cards in the deck");
     }
 }

@@ -2,32 +2,29 @@ namespace BasicPoker.Core.Extensions;
 
 public static class EnumerableExtensions
 {
-    private static readonly Random _rng = new();
-    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+    private static class ThreadSafeRandom
     {
-        return source.Shuffle(_rng);
-    }
+        [ThreadStatic] private static Random? s_local;
 
-    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random rng)
-    {
-        if (source == null) throw new ArgumentNullException(nameof(source));
-        if (rng == null) throw new ArgumentNullException(nameof(rng));
-
-        return source.ShuffleIterator(rng);
-    }
-
-    private static IEnumerable<T> ShuffleIterator<T>(
-        this IEnumerable<T> source, Random rng)
-    {
-        var buffer = source.ToList();
-        for (int i = 0; i < buffer.Count; i++)
+        public static Random ThisThreadsRandom
         {
-            int j = rng.Next(i, buffer.Count);
-            yield return buffer[j];
-
-            buffer[j] = buffer[i];
+            get { return s_local ??= new Random(unchecked(Environment.TickCount * 31 + Environment.CurrentManagedThreadId)); }
         }
     }
+
+
+    public static IList<T> Shuffle<T>(this IList<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = ThreadSafeRandom.ThisThreadsRandom.Next(n + 1);
+            (list[n], list[k]) = (list[k], list[n]);
+        }
+        return list;
+    }
+
 
     public static IEnumerable<T[]> Combinations<T>(this IEnumerable<IEnumerable<T>> input)
     {

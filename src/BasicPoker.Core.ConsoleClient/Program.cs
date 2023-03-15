@@ -8,9 +8,9 @@ class Program
     {
         var table = new Table();
 
-        var player1 = new Player(50);
-        var player2 = new Player(50);
-        var player3 = new Player(50);
+        var player1 = new AIPlayerLevel1(50);
+        var player2 = new AIPlayerLevel1(50);
+        var player3 = new UIPlayer(50);
 
         table.SeatPlayer(player1);
         table.SeatPlayer(player2);

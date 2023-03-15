@@ -4,10 +4,12 @@ public delegate void CardReceivedEventHandler(object? sender, CardReceivedEventA
 
 public class CardReceivedEventArgs
 {
-    public Card Card { get; }
+    public Card NewCard { get; }
+    public IReadOnlyList<Card> AllCards { get; }
 
-    public CardReceivedEventArgs(Card card)
+    public CardReceivedEventArgs(Card card, IReadOnlyList<Card> allCards)
     {
-        Card = card;
+        NewCard = card;
+        AllCards = allCards;
     }
 }

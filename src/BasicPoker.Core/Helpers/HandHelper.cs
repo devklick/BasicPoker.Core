@@ -16,13 +16,13 @@ public class HandHelper
         HandTypes = HandMetadata.Keys.ToList().OrderByDescending(x => x).ToList();
     }
 
-    public static Dictionary<HandType, HandProbability> DetermineHandProbabilities(List<Card> playerCards, List<Card> tableCards)
+    public static Dictionary<HandType, HandProbability> DetermineHandProbabilities(IReadOnlyList<Card> playerCards, IReadOnlyList<Card> communityCards)
     {
         var results = new Dictionary<HandType, HandProbability>();
 
         foreach (var handType in HandTypes)
         {
-            var allCards = new List<Card>(playerCards).Concat(tableCards).ToList();
+            var allCards = new List<Card>(playerCards).Concat(communityCards).ToList();
             var metadata = HandMetadata[handType];
 
             results.Add(handType, DetermineHandProbability(allCards, handType, metadata));
